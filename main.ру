@@ -1,4 +1,19 @@
-import asyncio
+import asyncio;  from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Бот жив!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
@@ -77,4 +92,5 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
+keep_alive(); 
     asyncio.run(main())
